@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.img{
+	position: absolute; top: 10px; left: 10px;
+}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".img").hide();
+		$(".img:first").fadeIn("slow");
+		
+		var next;
+		$(".img").click(function(){
+			$(this).fadeIn("slow");
+			//alert($(this).next().length);
+			next = ($(this).next().length)?$(this).next() : $(".img:first");
+			$(this).fadeOut("fast");
+			next.fadeIn("fast");
+			event.preventDefault();
+		});
+	});
+</script>
+</head>
+<body>
+<a class = "img" href = "">
+	<img src="images/p1.jpg" width="300px" height="300px">	<!-- width는 비율로 줄수 있지만 height는 주의 해야한다. -->
+</a>
+<a class = "img" href = "">
+	<img src="images/p2.jpg" width="300px" height="300px">
+</a>
+<a class = "img" href = "">
+	<img src="images/p3.jpg" width="300px" height="300px">
+</a>
+<a class = "img" href = "">
+	<img src="images/p4.jpg" width="300px" height="300px">
+</a>
+<a class = "img" href = "">
+	<img src="images/p5.jpg" width="300px" height="300px">
+</a>
+
+</body>
+</html>

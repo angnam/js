@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//text문서 읽기
+		$("#test1").click(function(){
+			$("#disp").load("jq12.txt");	//load() <- ajax 처리 메소드
+			/* 
+			$("#disp").hide().load("jq12.txt", function(){
+				$(this).fadeIn("slow");
+			}); 
+			*/
+		});
+		
+		$("#test2").click(function(){	//get() ajax 처리 메소드
+			$("#disp").empty();
+			$.get("jq12.xml", function(data){
+				//alert(data);
+				//alert($(data).find("aa").size());	// aa 요소의 갯수.
+				$(data).find("aa").each(function(){	//each는 for문과 같은기능.
+					var fdata = $(this);
+					//console.log(fdata);
+					var str = "<div>";
+					str += fdata.attr("part") + " " + fdata.attr("term");	//속성 값 얻기.
+					str += " - ";
+					str += fdata.find("desc").text();	//element값 얻기.
+					str += "</div>";
+					$("#disp").append(str);
+				});
+			});
+			
+			/* 
+			$.post("jq12.xml", function(){	//post() ajax 처리 메소드
+				
+			}); 
+			*/
+			
+		});
+		
+		$("#test3").click(function(){	//db읽기
+			$("#disp2").empty();
+			$.get("jq12xml.jsp", function(data2){
+					var str2 = "<table border = '1'><tr><td>사번</td><td>이름</td><td>부서명</td></tr>";
+				//alert(data2);
+				//alert($(data2).find("sawon").size());
+				$(data2).find("sawon").each(function(){
+					var dbdata = $(this);
+					console.log(dbdata);
+					str2 += "<tr>";
+					str2 += "<td>" + dbdata.find("sno").text(); + "</td>";
+					str2 += "<td>" + dbdata.find("sname").text(); + "</td>";
+					str2 += "<td>" + dbdata.find("bname").text(); + "</td>";
+					str2 += "</tr>";
+				});
+				str2 += "</table>";
+				$("#disp2").append(str2);
+			});
+		});
+		
+		$("#test4").on("click", function(){	//json읽기
+			$("#disp").empty();
+			$.getJSON("jq12.json", null, function(data){
+				//alert(data);
+				$.each(data,  function(keyindex, value){
+					//alert(keyindex + " " + value);
+					var str2 = "<table border = '1'><tr><td>사번</td><td>이름</td><td>부서명</td></tr>";
+					str += "<li>" + value["title"] + "</li>";
+					str += "<li>" + value["desc"] + "</li>"
+					str += "<li>" + value["author"] + "</li>"
+					str += "</ol>";
+					$("#disp").append(str);
+				});
+			});
+			
+		});
+		
+		$("#test5").on("click",function(){
+			$("#disp2").empty();
+			var str2 = "<table border = '1'><tr><td>사번</td><td>이름</td><td>부서번호</td></tr>";
+			$.getJSON("jq12json.jsp", null, function(data){
+				//alert(data);
+				$.each(data["sawons"], function(aa, sawons){
+					//alert(keyindex + " " + value);
+					 str2 += "<tr><td>" + sawons["no"] + "</td>";
+					 str2 += "<td>" + sawons["name"] + "</td>";
+					 str2 += "<td>" + sawons["btel"] + "</td></tr>";
+				});
+					 str2 += "</table>";
+					 $("#disp2").append(str2);
+			});
+		});
+	});
+</script>
+</head>
+<body>
+<h2> ajax로 자료 읽기</h2>
+<div>
+	<ul>
+		<li id = "test1">txt읽기</li>
+		<li id = "test2">xml읽기</li> 	<!--  사원자료 얻기 -->
+		<li id = "test3">db자료읽기</li>
+		<li id = "test4">json읽기</li>
+		<li id = "test5">db자료읽기(json)</li>
+	</ul>
+</div>
+<hr>
+결과 : <br>
+<div id = "disp"></div>
+<hr>
+결과 (db): <div id  = "disp2"></div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btnOk").click(function(){   //xml
+			$("#show").empty();
+			if($("#buser").val() == ""){
+				alert("부서명을 입력해주세요.");
+			}else{
+				$.ajax({
+					type: "post", url: "jqjson.jsp",data : {"buser" : $("#buser").val()}, dataType: "json",
+					success:function(data){
+						//alert(data["sawons"]);
+						var count = 0;
+						var str ="<table border = '1'><tr><th>사번</th><th>직원명</th><th>직급</th><th>관리고객</th><tr>";
+						$.each(data["sawons"], function(index, entry){
+							var sname = entry["name"];
+							if(entry["gogek"] == 0){
+								a = "<td>" + entry["name"] + "</td>";
+							}else{
+								a = "<td><a href = javascript:func('" + sname + "')>"+ entry["name"] +"</a></td>";
+							}
+							str += "<tr><td>" + entry["no"] + "</td>";
+							str += a
+							str += "<td>" + entry["jik"] + "</td>";
+							str += "<td>" + entry["gogek"] + "</td></tr>";
+							count++;
+						});
+						if(count == 0){
+							alert("부서명을 제대로 입력해주세요");
+							return;
+						}
+						str += "</table>";
+						$("#show").append(str);
+						$("#show").append("인원수 : " + count + "명");
+						},
+						error: function(){
+						$("#disp").text("에러 발생");
+						},
+				});
+			};
+		});
+		
+	});
+	function func(aa){
+		var name = aa;
+		$.ajax({
+			type: "post", url: "jqjson.jsp",data : {"name" : name}, dataType: "json",
+			success:function(data){
+				//alert(data["sawons"]);
+				var count = 0;
+				var gen;
+				$("#show2").empty();
+				var str ="<table border = '1'><tr><th>고객명</th><th>고객전화</th><th>성별</th><th>나이</th><tr>";
+				$.each(data["sawons"], function(index, entry){
+					if(entry["gen"].substring(7,8) == 1){
+						gen = "남";
+					}else{
+						gen = "여";
+					}
+					str += "<tr><td>" + entry["name"] + "</td>";
+					str += "<td>" + entry["tel"] + "</td>";
+					str += "<td>" + gen + "</td>";
+					str += "<td>" + entry["age"] + "</td></tr>";
+					count++;
+				});
+					str += "</table>";
+					$("#show2").append(str);
+					$("#show2").append("인원수 : " + count + "명");
+					
+				},
+					error: function(){
+					$("#disp").text("에러 발생");
+				},
+		});
+	}
+</script>
+</head>
+<body>
+	<h2>jQuery(Ajax) json type</h2>
+	부서명 :
+	<input type="text" id="buser" name="buser">
+	<button id="btnOk">확인</button>
+	<br>
+	<div id="show"></div>
+	<br>
+	<div id="show2"></div>
+
+</body>
+</html>

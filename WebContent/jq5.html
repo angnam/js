@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+function tdClick(data){
+	alert(data);
+};	//js 
+
+$(document).ready(function(){
+	$("td").click(function(){
+		$("#show").html($(this).text());
+	});	
+	
+	$("#dbl").dblclick(function(){
+		$("#show").html($(this).text());
+	});	
+	
+	$("#txta").keydown(function(event){
+		$("#txtCode").val(event.keyCode);
+	});
+	
+	//event binding
+	//$("#btn").click(function(){....})
+	$("#btn").bind("click", function(){	//객체와 이벤트 연결
+		alert("Aa");
+		$("#btn").unbind("click");	//객체와 이벤트연결 해제
+	});
+	
+	var count = 0;
+	$("#myarea").bind("mouseenter mouseleave", function(event){ //bind는 이벤트의 종류를 복수개로 선택가능.
+		count++;
+		$("#mresult").text(count + "회 enter or leave");
+		
+		if (event.type == "mouseenter"){
+			$("#mresult").css("background", "red");
+		}else if(event.type == "mouseleave"){
+			$("#mresult").css("background", "white");
+		}
+	});
+	
+	//on 메소드
+	/* 
+	$("#btnadd").click(function(event){
+		$("ul").append("<li> list item" + $("li").length + "</li>");
+	});
+	$("li").click(function(){	//나중에  추가된 것에 대해선 이벤트가 발생하지 않는다.
+		alert($(this).text());
+	});
+	 */
+	 
+	 $("#btnadd").on("click", function(){	//bind및 추가된 모든 것에대한 이벤트 적용.
+		 $("ul").append("<li> list item" + $("li").length + "</li>");
+	 });
+	 
+	 $(document).on("click", "li", function(){	//현재 문서내의 li테그 전체에 이벤트 적용.
+		 alert($(this).text());
+	 });
+	 
+	 $("#btndel").on("click", function(){	//	현재 문서내의 li테그 전체 이벤트 해제
+		$(document).off("click", "li");
+	 });
+	 
+});
+</script>
+</head>
+<body>
+** 이벤트 연습 **<p/>
+<table border = "1" width = "200">
+	<tr>
+		<td onclick = "tdClick('나른한 오후')">kbs</td>
+		<td>mbc</td>
+		<td>sbs</td>
+	</tr>
+</table>
+<br>
+<div id = "show"></div>
+<hr>
+<div id = "dbl">더블 클릭 대상</div>
+<br>
+키보드 입력 :<br>
+<input type = "text" id = "txta"><br>
+<input type = "text" id = "txtCode" readonly="readonly">
+<br><br><br>
+<button id = "btn">bind 이벤트 연습</button>
+<br>
+<p/>
+<span id = "myarea" style = "background-color: yellow">마우스를 올리고 내리기</span>
+<br>
+<div id = "mresult">마우스 처리 결과</div>
+<p/>
+** 라이브 이벤트 연습 **<br>
+<div>
+	<ul>
+		<li>list item0</li>
+	</ul>
+	<input type="button" id = "btnadd" value = "요소 추가">
+	<input type="button" id = "btndel" value = "이벤트 해제">
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

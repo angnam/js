@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btn1").on("click", aa);
+		$("#btn2").on("click", bb);
+		$("#btn3").on("click", cc);
+	});
+	
+	function aa() {
+		$("#disp").empty();
+		$.ajax({
+			type : "get", url : "http://192.168.0.25/web2_js/jq14.jsp", dataType : "jsonp", jsonp : "callback",
+			success : function(data){
+				var re = data.datas;
+				alert(re + " " +  re.length);
+				var imsi = "";
+				$(re).each(function(index, entry){
+					imsi = "<div>" + entry["no"] + " - " + entry["name"] + "</div>";
+					$("#disp").append(imsi);
+				});
+			},
+			fail : function(){
+				alert("읽기실패");
+			}
+		});
+	}
+	
+	function bb() {
+		var flickrApi = "https://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+		$.getJSON(flickrApi,{
+			tags:"mount rainer", tagmode:"any", format:"json"
+		})
+		.done(function(data){
+			$.each(data.items, function(i, item){
+				$("<img>").attr("src", item.media.m).appendTo("#pic")
+				if( i === 3){
+					return false;
+				}
+			});
+		});
+	}
+
+	function cc() {
+		
+	}
+	
+</script>
+</head>
+<body>
+<h2>** 다른 도메인 서버의 자료 읽기</h2>
+<button id = "btn1">test 1</button>
+<button id = "btn2">test 2</button>
+<button id = "btn3">test 3</button>
+<hr>
+<div id = "disp"></div>
+<div id = "pic"></div>
+</body>
+</html>

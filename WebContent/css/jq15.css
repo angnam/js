@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+button {
+	background: #00f; color: #fff; border: 0 solid;
+	height: 25px; width: 100px; padding: 5px; margin: .5em;
+	position: relative;
+}
+
+table {
+	text-align: center;
+}
+
+th {
+	background: gray;
+}
+
+.msg{
+	color : red;
+}

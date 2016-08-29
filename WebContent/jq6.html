@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#sang").bind("keydown", function(e){
+			if(e.keyCode == 13){
+				if($("#sang").val() == ""){
+					alert("품명을 입력하시오.");
+					return;
+				}else if(isNaN($("#sang").val()) ==  false){
+					alert("문자만 입력하시오");
+					$("#sang").val("");
+					return;
+				}else{
+					$("#su").focus();
+				}
+			}
+		});
+		
+		$("#su").bind("keydown", function(e){
+			if(e.keyCode == 13){
+				if($("#su").val() == ""){
+					alert("수량을 입력하시오.");
+					return;
+				}else if(isNaN(parseInt($("#su").val()))){
+					alert("숫자만 입력하시오");
+					$("#su").val("");
+					return;
+				}else{
+					$("#dan").focus();
+				}
+			}
+		});
+		
+		$("#dan").bind("keydown",function(e){
+			//검사 생략
+			$("#disp").empty();
+			$("#disp").append(
+				$("#sang").val() + "의 금액은 " + ($("#su").val() * $("#dan").val()) + "원" 
+			)
+		});
+		
+		$("#clear").bind("click",  function(e){
+			$("#sang").val("");
+			$("#su").val("");
+			$("#dan").val("");
+			$("#disp").val("");
+			$("#sang").focus();
+		});
+	});
+	
+</script>
+</head>
+<body>
+** 입력자료 검사 ** <br>
+<form action="#">
+	품명 : <input type = "text" id = "sang"><br>
+	수량 : <input type = "text" id = "su"><br>
+	단가 : <input type = "text" id = "dan"><br>
+	결과 : <div id = "disp"></div>
+</form>
+<!-- form테그내의 이벤트는  버튼은 엔터에 대한 클릭 이벤트가 기본으로 먹는다.! 주의! -->
+<button id = "clear">초기화</button>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+
+		var name = /^[가-힣]{1,10}$/;
+		var jumsu = /^[0-9]{1,3}$/;
+
+		$("#result").on("click", function() {
+
+			if (!name.test($("#student").val())) {
+				alert("이름은 한글 10글자 이하만 입력가능.");
+				$("#sutdent").focus();
+				return false;
+			} else if ($("#student").val() == "") {
+				alert("이름을 입력해주세요.");
+				$("#sutdent").focus();
+				return false;
+			} else if (!jumsu.test($("#korean").val())) {
+				alert("점수는 숫자만 3글자이하만 입력가능.");
+				$("#korean").focus();
+				return false;
+			} else if (!jumsu.test($("#english").val())) {
+				alert("점수는 숫자만 3글자 이하만 입력가능.")
+				$("#english").focus();
+				return false;
+			} else if ($("#korean").val() == "") {
+				alert("국어점수를 입력해주세요.");
+				$("#korean").focus();
+				return false;
+			} else if ($("#english").val() == "") {
+				alert("영어점수를 입력해주세요.");
+				$("#english").focus();
+				return false;
+			}
+		});
+		
+		$("#clear").on("click", function(){
+			$("#student").val(null);
+			$("#korean").val(null);
+			$("#english").val(null);
+			$("#student").focus;
+		});
+	});
+</script>
+</head>
+<body>
+<h2>**문제**</h2>
+<form action="test_1jsp.jsp">
+학생명 : <input type = "text" id = "student" name = "name"><br>
+국&nbsp&nbsp&nbsp어 : <input type = "text" id = "korean" name = "korean"><br>
+영&nbsp&nbsp&nbsp어 : <input type = "text" id = "english" name = "english"><br><br>
+<input type = "submit" id = "result" value = "처리">
+<button id = "clear">취소</button>
+</form>
+</body>
+</html>
+
+
+
+
+

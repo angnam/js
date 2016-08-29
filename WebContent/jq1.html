@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery 연습</title>
+<!-- 
+<script type="text/javascript" src = "js/jquery.js"></script> import 방식
+-->
+<!-- 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+cdn방식
+-->
+<script type="text/javascript" src = "http://code.jquery.com/jquery-latest.js"></script>
+<style type="text/css">
+	.good{
+		font-size: 50px;
+	}
+</style>
+
+<script type="text/javascript">
+	/* window.onload = function() {
+		alert("aa");
+	} */
+	//jQuery(document).ready();// window.onload와 같다.
+	$(document).ready(function(){ 	// jquery. 텍스트만 로딩이 완료되면 수행.
+		//alert("bb");
+		$("*").css("border", "1px solid #f00");	//* 은 문서 전체를 선택한것.
+		$('span').css("border", "3px dotted blue");	//엘리먼트 요소를 선택
+		$("#content").css("background-color", "cyan");	//id를 선택(attribute)
+		$(".my").css("border", "5px solid yellow");	//class를 선택(attribute)
+		$("i > .my").css("color", "red");	//i tag안에있는  class my
+		
+	});
+	
+	$(function(){	// $(document).ready(function())과 같다. 생략가능.
+		//$(".kr").css("color", "blue");
+		//$(".kr").addClass("good"z);
+		$(".kr").css("color", "blue").addClass("good");	//method chain
+		
+	});
+</script>
+</head>
+<body>
+	<h2 class = "good">jQuery연습</h2>
+	<p class = "my"> 매우 무더운 여름 </p>
+	<div>
+		<div id = "content">가을이 오겠지</div>
+	</div>
+	<span>강남역</span>
+	<i><span class = "my">12번 출구</span></i>
+	<b class = "kr">대한민국</b>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

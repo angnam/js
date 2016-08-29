@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#btnOk").on("click", function(){
+			$("#disp").empty();
+			var my = $.ajax({
+				type : "get", url : "jq12xml.jsp", dataType : "xml", 
+				success : function(data){
+				var str = "<table border = '1'><tr><th>코드</th><th>상품명</th><th>수량</th><th>단가</th><th>총액</th></tr>";
+				var count = 0;
+					//$("#disp").text(data);;
+					$(data).find("sangpum").each(function(){
+						str += "<tr><td>" +$(this).find("dcode").text() + "</td>";
+						str += "<td>" +$(this).find("dsang").text() + "</td>";
+						str += "<td>" +$(this).find("dsu").text() + "</td>";
+						str += "<td>" +$(this).find("ddan").text() + "</td>";
+						str += "<td>" +$(this).find("dtotal").text() + "</td></tr>";
+						count++;
+					});
+					str += "</table>"
+					$("#disp").append(str);;
+					$("#disp").append("건수 : " + count);
+				}
+			});
+			
+			my.fail(function(status){
+				$("#disp").text("처리 실패" +  status);
+			});
+		});
+		
+		$("#serch").on("click", function(){
+			if($("#sang").val() == ""){
+				alert("상품명을 입력해 주세요");
+				return;
+			}else{
+				
+			$("#disp").empty();
+			var name = $("#sang").val();
+			var my = $.ajax({
+				type : "post", url : "jq12xml.jsp", data : {"name" : $("#sang").val()}, dataType : "xml", 
+				success : function(data){
+				var str = "<table border = '1'><tr><th>코드</th><th>상품명</th><th>수량</th><th>단가</th><th>총액</th></tr>";
+				var count = 0;
+					//$("#disp").text(data);;
+					$(data).find("sangpum").each(function(){
+						str += "<tr><td>" +$(this).find("dcode").text() + "</td>";
+						str += "<td>" +$(this).find("dsang").text() + "</td>";
+						str += "<td>" +$(this).find("dsu").text() + "</td>";
+						str += "<td>" +$(this).find("ddan").text() + "</td>";
+						str += "<td>" +$(this).find("dtotal").text() + "</td></tr>";
+						count++;
+					});
+					str += "</table>"
+					$("#disp").append(str);
+					$("#disp").append("건수 : " + count);
+				}
+			});
+			};
+			
+			my.fail(function(status){
+				$("#disp").text("처리 실패" +  status);
+			});
+		});
+	});
+</script>
+<body>
+<h2>상품정보</h2>
+<button id = "btnOk">전체</button>
+상품명 : <input type = "text" id = "sang" name = "sang">
+<button id = "serch">검색</button>
+<div id = "disp"></div>
+</body>
+</html>
